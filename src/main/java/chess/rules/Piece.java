@@ -25,14 +25,6 @@ public enum Piece {
     WKING,
     EMPTY,
     BLACK,
-    WHITE;
-    
-    public Piece getColor(Piece piece){
-        if(piece.toString().charAt(0) == 'B'){
-            return this.BLACK;
-        }
-        return this.WHITE;
-        
-    }
+    WHITE
        
 }

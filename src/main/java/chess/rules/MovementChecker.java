@@ -14,25 +14,26 @@ import java.util.ArrayList;
 public class MovementChecker {
 
     private ArrayList<Piece[][]> legalMoves;
+    private final int size = 8;
+    private final int min = 0;
 
     public ArrayList<Piece[][]> getLegalMoves(Piece[][] board, boolean isWhite) {
         legalMoves = new ArrayList();
-        if(isWhite){
+        if (isWhite) {
             getLegalWhiteMoves(board);
         }
         return legalMoves;
     }
 
-    public void getLegalWhiteMoves(Piece[][] board) {
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board.length; j++) {
+    private void getLegalWhiteMoves(Piece[][] board) {
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
                 Piece currentSquare = board[i][j];
                 switch (currentSquare) {
 
                     case WPAWN:
-                        getLegalWhitePawnMoves(board,j,i);
+                        getLegalWhitePawnMoves(board, j, i);
                         break;
-                    
 
                 }
 
@@ -41,35 +42,63 @@ public class MovementChecker {
 
     }
 
-    public void getLegalWhitePawnMoves(Piece[][] board, int x, int y) {
-        
-        if(y +1 < board.length){
-            Piece contentOfTile = board[y+1][x];
-            if(contentOfTile == Piece.EMPTY){
-                Piece[][] moveUp = moveCharacter(board,x,y,x,y+1);
+    private void getLegalWhitePawnMoves(Piece[][] board, int x, int y) {
+
+        int yUp = y + 1;
+        if (yUp < size) {
+            Piece contentOfTile = board[yUp][x];
+            if (contentOfTile == Piece.EMPTY) {
+                Piece[][] moveUp = moveCharacter(board, x, y, x, yUp);
                 legalMoves.add(moveUp);
+            }
+            int xRight = x + 1;
+            if (xRight < size) {
+                contentOfTile = board[yUp][xRight];
+                {
+                    if (getColor(contentOfTile) == Piece.BLACK) {
+                        Piece[][] attackRight = moveCharacter(board, x, y, xRight, yUp);
+                        legalMoves.add(attackRight);
+                    }
+                }
+            }
+            int xLeft = x - 1;
+            if (xLeft >= min) {
+                contentOfTile = board[yUp][xLeft];
+                {
+                    if (getColor(contentOfTile) == Piece.BLACK) {
+                        Piece[][] attackLeft = moveCharacter(board, x, y, xLeft, yUp);
+                        legalMoves.add(attackLeft);
+                    }
+                }
+
             }
         }
 
     }
-    
-    
-    public Piece[][] moveCharacter(Piece[][] board, int x1, int y1, int x2, int y2){
-        
-        
+
+    private Piece[][] moveCharacter(Piece[][] board, int x1, int y1, int x2, int y2) {
+
         Piece[][] boardToBeReturned = new Piece[8][8];
-        
-        for(int i = 0; i<8; i++){
-            for(int j = 0; j<8; j++){
+
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
                 boardToBeReturned[i][j] = board[i][j];
             }
         }
-        
+
         Piece pieceAtCurrentLocation = board[y1][x1];
         boardToBeReturned[y2][x2] = pieceAtCurrentLocation;
         boardToBeReturned[y1][x1] = Piece.EMPTY;
-        
+
         return boardToBeReturned;
+    }
+
+    public Piece getColor(Piece piece) {
+        if (piece.toString().charAt(0) == 'B') {
+            return Piece.BLACK;
+        }
+        return Piece.WHITE;
+
     }
 
 }

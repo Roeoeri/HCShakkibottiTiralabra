@@ -36,7 +36,7 @@ public class TiraBot implements ChessBot{
     
     @Override
     public String nextMove(GameState gs){
-        return"Asd";
+        return"e1e2";
     }
     
     
@@ -49,7 +49,7 @@ public class TiraBot implements ChessBot{
         int y2 = move.charAt(3)-49;
         
   
-        Piece PieceToBeMoved = board[x1][y1];
+        Piece PieceToBeMoved = board[y1][x1];
         
         
         board[y1][x1] = Piece.EMPTY;
