@@ -5,6 +5,7 @@
 
 ## Viikkoraportit
 [Viikko1](https://github.com/Roeoeri/HCShakkibottiTiralabra/blob/master/dokumentaatio/viikkoraportit/viikko1.md)
+
 [Viikko2](https://github.com/Roeoeri/HCShakkibottiTiralabra/blob/master/dokumentaatio/viikkoraportit/viikko2.md)
 
 
