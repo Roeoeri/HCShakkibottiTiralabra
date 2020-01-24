@@ -33,6 +33,7 @@ jacocoTestReport {
             fileTree(dir: it, exclude: 'chess/App*')
 	    fileTree(dir: it, exclude: 'chess/connection/*')
             fileTree(dir: it, exclude: 'datastructureproject/*')
+	    fileTree(dir: it, exclude: 'logging/*')
         }))
     } 
 }
