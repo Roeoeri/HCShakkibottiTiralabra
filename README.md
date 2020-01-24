@@ -6,3 +6,5 @@
 ## Viikkoraportit
 [Viikko1](https://github.com/Roeoeri/HCShakkibottiTiralabra/blob/master/dokumentaatio/viikkoraportit/viikko1.md)
 
+## Testikattavuus
+[![codecov](https://codecov.io/gh/Roeoeri/HCShakkibottiTiralabra/branch/master/graph/badge.svg)](https://codecov.io/gh/Roeoeri/HCShakkibottiTiralabra)
