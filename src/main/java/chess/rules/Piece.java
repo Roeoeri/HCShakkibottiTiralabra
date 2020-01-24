@@ -23,6 +23,16 @@ public enum Piece {
     WBISHOP,
     WQUEEN,
     WKING,
-    EMPTY
+    EMPTY,
+    BLACK,
+    WHITE;
+    
+    public Piece getColor(Piece piece){
+        if(piece.toString().charAt(0) == 'B'){
+            return this.BLACK;
+        }
+        return this.WHITE;
+        
+    }
        
 }
