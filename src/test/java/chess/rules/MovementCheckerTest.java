@@ -47,6 +47,30 @@ public class MovementCheckerTest {
     //
     // @Test
     // public void hello() {}
+    
+    @Test
+    public void blackPawnMovesCorrectlyWhenThereIsRoomToMove() {
+        Piece[][] testBoard = new Piece[][]{
+            {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
+            {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
+            {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
+            {Piece.EMPTY, Piece.EMPTY, Piece.BPAWN, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
+            {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
+            {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
+            {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
+            {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},};
+            
+        
+       ArrayList<Piece[][]> result = checker.getLegalMoves(testBoard, false);
+       
+       Piece[][] resultBoard = result.get(0);
+
+       assertTrue(resultBoard[3][2] == Piece.EMPTY && resultBoard[2][2] == Piece.BPAWN);
+       
+    	
+    }
+    
+    
     @Test
     public void whitePawnMovesCorrectlyWhenThereIsRoomToMove() {
         Piece[][] testBoard = new Piece[][]{
@@ -85,6 +109,25 @@ public class MovementCheckerTest {
         assertTrue(result.size() == 3);
 
     }
+    
+    @Test
+    public void blackPawnReturnsCorrectNumberOfMovesWhenThereArePossibilitiesToAttack() {
+
+        Piece[][] testBoard = new Piece[][]{
+            {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
+            {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
+            {Piece.EMPTY, Piece.WPAWN, Piece.EMPTY, Piece.WPAWN, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
+            {Piece.EMPTY, Piece.EMPTY, Piece.BPAWN, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
+            {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
+            {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
+            {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
+            {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},};
+
+        ArrayList<Piece[][]> result = checker.getLegalMoves(testBoard, false);
+
+        assertTrue(result.size() == 3);
+
+    }
 
     @Test
     public void whitePawnsCaptureBlackCharactersAtLeft() {
@@ -104,6 +147,25 @@ public class MovementCheckerTest {
         assertTrue(result[3][2] == Piece.EMPTY && result[4][1] == Piece.WPAWN);
 
     }
+    
+    @Test
+    public void blackPawnsCaptureWhiteCharactersAtLeft() {
+
+        Piece[][] testBoard = new Piece[][]{
+            {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
+            {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
+            {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
+            {Piece.EMPTY, Piece.WPAWN, Piece.WPAWN, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
+            {Piece.EMPTY, Piece.EMPTY, Piece.BPAWN, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
+            {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
+            {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
+            {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},};
+
+        Piece[][] result = checker.getLegalMoves(testBoard, false).get(0);
+
+        assertTrue(result[4][2] == Piece.EMPTY && result[3][1] == Piece.BPAWN);
+
+    }
 
     @Test
     public void whitePawnsCaptureBlackCharactersAtRight() {
@@ -121,6 +183,25 @@ public class MovementCheckerTest {
         Piece[][] result = checker.getLegalMoves(testBoard, true).get(0);
 
         assertTrue(result[3][2] == Piece.EMPTY && result[4][3] == Piece.WPAWN);
+
+    }
+    
+    @Test
+    public void blackPawnsCaptureWhiteCharactersAtRight() {
+
+        Piece[][] testBoard = new Piece[][]{
+            {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
+            {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
+            {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
+            {Piece.EMPTY, Piece.EMPTY, Piece.WPAWN, Piece.WPAWN, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
+            {Piece.EMPTY, Piece.EMPTY, Piece.BPAWN, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
+            {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
+            {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
+            {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},};
+
+        Piece[][] result = checker.getLegalMoves(testBoard, false).get(0);
+
+        assertTrue(result[2][4] == Piece.EMPTY && result[3][3] == Piece.BPAWN);
 
     }
 }

@@ -21,6 +21,8 @@ public class MovementChecker {
         legalMoves = new ArrayList();
         if (isWhite) {
             getLegalWhiteMoves(board);
+        }else {
+        	getLegalBlackMoves(board);
         }
         return legalMoves;
     }
@@ -49,7 +51,7 @@ public class MovementChecker {
                 switch(currentSquare){
                     
                     case BPAWN:
-                        getLegalPawnMoves(board,j,i-2, Piece.WHITE);
+                        getLegalPawnMoves(board,j,i, Piece.WHITE);
                         break;
                 }
             }
@@ -57,8 +59,13 @@ public class MovementChecker {
     }
 
     private void getLegalPawnMoves(Piece[][] board, int x, int y, Piece oppositeColor) {
+    	int pawnStep = 1;
+    	if(board[y][x] == Piece.BPAWN) {
+    		pawnStep = -1;
+    	}
+    	
 
-        int yUp = y + 1;
+        int yUp = y + pawnStep;
         if (yUp < size) {
             Piece contentOfTile = board[yUp][x];
             if (contentOfTile == Piece.EMPTY) {
@@ -113,7 +120,10 @@ public class MovementChecker {
         if (piece.toString().charAt(0) == 'B') {
             return Piece.BLACK;
         }
-        return Piece.WHITE;
+        if(piece.toString().charAt(0)== 'W') {
+        	return Piece.WHITE;
+        }
+        return Piece.EMPTY;
 
     }
 
