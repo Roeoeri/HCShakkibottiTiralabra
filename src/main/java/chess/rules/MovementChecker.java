@@ -32,7 +32,7 @@ public class MovementChecker {
                 switch (currentSquare) {
 
                     case WPAWN:
-                        getLegalWhitePawnMoves(board, j, i);
+                        getLegalPawnMoves(board, j, i, Piece.BLACK);
                         break;
 
                 }
@@ -41,8 +41,22 @@ public class MovementChecker {
         }
 
     }
+    
+    private void getLegalBlackMoves(Piece[][] board ){
+        for(int i = 0; i<size; i++){
+            for(int j = 0; j<size; j++){
+                Piece currentSquare = board[i][j];
+                switch(currentSquare){
+                    
+                    case BPAWN:
+                        getLegalPawnMoves(board,j,i-2, Piece.WHITE);
+                        break;
+                }
+            }
+        }
+    }
 
-    private void getLegalWhitePawnMoves(Piece[][] board, int x, int y) {
+    private void getLegalPawnMoves(Piece[][] board, int x, int y, Piece oppositeColor) {
 
         int yUp = y + 1;
         if (yUp < size) {
@@ -55,7 +69,7 @@ public class MovementChecker {
             if (xRight < size) {
                 contentOfTile = board[yUp][xRight];
                 {
-                    if (getColor(contentOfTile) == Piece.BLACK) {
+                    if (getColor(contentOfTile) == oppositeColor) {
                         Piece[][] attackRight = moveCharacter(board, x, y, xRight, yUp);
                         legalMoves.add(attackRight);
                     }
@@ -65,7 +79,7 @@ public class MovementChecker {
             if (xLeft >= min) {
                 contentOfTile = board[yUp][xLeft];
                 {
-                    if (getColor(contentOfTile) == Piece.BLACK) {
+                    if (getColor(contentOfTile) == oppositeColor) {
                         Piece[][] attackLeft = moveCharacter(board, x, y, xLeft, yUp);
                         legalMoves.add(attackLeft);
                     }
@@ -75,6 +89,8 @@ public class MovementChecker {
         }
 
     }
+    
+ 
 
     private Piece[][] moveCharacter(Piece[][] board, int x1, int y1, int x2, int y2) {
 
