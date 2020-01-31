@@ -49,10 +49,11 @@ public class MovementChecker {
 					getLegalQueenMoves(board,j,i);
 					break;
 					
-				
+				case WKING:
+					getLegalKingMoves(board,j,i);
+					break;
 
 				}
-				
 				
 			}
 		}
@@ -80,8 +81,10 @@ public class MovementChecker {
 				case BQUEEN:
 					getLegalQueenMoves(board,j,i);
 					break;
+					
+				case BKING:
+					getLegalKingMoves(board,j,i);
 				}
-				
 				
 			}
 		}
@@ -158,6 +161,24 @@ public class MovementChecker {
 		
 		getLegalRookMoves(board,x,y);
 		getLegalBishopMoves(board,x,y);
+	}
+	
+	private void getLegalKingMoves(Piece[][] board, int x, int y) {
+		
+		Piece ownColor = getColor(board[y][x]);
+		
+		for(int y2 = y-1; y2 <= y+1; y2++) {
+			for(int x2 = x-1; x2<=x+1; x2++) {
+				if(x2 >= size || x2<min || y2 >= size || y2 < min) {
+					continue;
+				}
+				Piece destinationTileColor = getColor(board[y2][x2]);
+				if(destinationTileColor == getOppositeColor(ownColor) || destinationTileColor == Piece.EMPTY) {
+					Piece[][] move = moveCharacter(board,x,y,x2,y2);
+					legalMoves.add(move);
+				}
+			}
+		}
 	}
 	
 	
