@@ -1,4 +1,4 @@
-# Viikko1 
+# Viikko3
 
 Tällä viikolla ohjelmistoon valmistui ratsun liikkeitä lukuunottamatta nappuloiden laillisia liikkeitä generoiva pelimoottori. Ohjelma on siis edistynyt suunnilleen aikataulussa joskin tavoitteeseen eli valmiiseen pelimoottoriin ei vielä tällä viikolla päästy. 
 
