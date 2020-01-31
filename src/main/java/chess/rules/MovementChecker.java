@@ -113,95 +113,40 @@ public class MovementChecker {
 		
 		Piece oppositeColor = getOppositeColor(ownColor);
 		
-		for (int i = x + 1; i < size; i++) {
-			Piece contentOfTile = board[y][i];
-			Piece colorOfTile = getColor(contentOfTile);
-			
-			if(colorOfTile == ownColor) {
-				break;
-			}
-			
-			if (colorOfTile == oppositeColor) {
-				Piece[][] attackRight = moveCharacter(board, x, y, i, y);
-				legalMoves.add(attackRight);
-				break;
-			}
-			
-			if (colorOfTile == Piece.EMPTY) {
-				Piece[][] moveRight = moveCharacter(board, x, y, i, y);
-				legalMoves.add(moveRight);
-			}
-			
-		}
+		traverseUntilEnd(board,x,y,x+1,y,1,0,ownColor);
+		
+		traverseUntilEnd(board,x,y,x-1,y,-1,0,ownColor);
+		
+		traverseUntilEnd(board,x,y,x,y+1,0,1,ownColor);
+		
+		traverseUntilEnd(board,x,y,x,y-1,0,-1,ownColor);
 
-		for (int i = x - 1; i >= min; i--) {
-			Piece contentOfTile = board[y][i];
-			Piece colorOfTile = getColor(contentOfTile);
-			
-			if(colorOfTile == ownColor) {
-				break;
-			}
-			
-			
-			if (colorOfTile == oppositeColor) {
-				Piece[][] attackLeft = moveCharacter(board, x, y, i, y);
-				legalMoves.add(attackLeft);
-				break;
-			}
-			if (colorOfTile == Piece.EMPTY) {
-				Piece[][] moveLeft = moveCharacter(board, x, y, i, y);
-				legalMoves.add(moveLeft);
-			}
-			
-		}
 
-		for (int i = y + 1; i < size; i++) {
-			
-			Piece contentOfTile = board[i][x];
-			Piece colorOfTile = getColor(contentOfTile);
-			
-			if(colorOfTile == ownColor) {
-				break;
-			}
-			
-			
-			if (colorOfTile == oppositeColor) {
-				Piece[][] attackUp = moveCharacter(board, x, y, x, i);
-				legalMoves.add(attackUp);
-				break;
-			}
-			
-			if (getColor(contentOfTile) == Piece.EMPTY) {
-				Piece[][] moveUp = moveCharacter(board, x, y, x, i);
-				legalMoves.add(moveUp);
-			}
-		}
-
-		for (int i = y - 1; i >= min; i--) {
-			
-			Piece contentOfTile = board[i][x];
-			Piece colorOfTile = getColor(contentOfTile);
-			
-			if(colorOfTile == ownColor) {
-				break;
-			}
-			
-			
-			if (colorOfTile == oppositeColor) {
-				Piece[][] attackDown = moveCharacter(board, x, y, x, i);
-				legalMoves.add(attackDown);
-				break;
-			}
-			if (colorOfTile == Piece.EMPTY) {
-				Piece[][] moveDown = moveCharacter(board, x, y, x, i);
-				legalMoves.add(moveDown);
-			}
-			
-		}
 	}
 	
+	private void traverseUntilEnd(Piece[][] board,int startX, int startY, int x, int y, int xSteps, int ySteps, Piece ownColor) {
+		if(x >= size || x<min || y >= size || y < min) {
+			return;
+		}
+		
+		Piece tileColor = getColor(board[y][x]);
+		
+		if(tileColor == ownColor) {
+			return;
+		}
+		
+		if(tileColor == getOppositeColor(ownColor)) {
+			Piece[][] attack = moveCharacter(board,startX,startY,x,y);
+			legalMoves.add(attack);
+			return;
+		}
+		
+		Piece[][] moveToThisTile = moveCharacter(board,startX,startY,x,y);
+		legalMoves.add(moveToThisTile);
+		
+		traverseUntilEnd(board,startX,startY, x + xSteps, y+ySteps, xSteps, ySteps, ownColor);
+	}
 	
-
 	private Piece[][] moveCharacter(Piece[][] board, int x1, int y1, int x2, int y2) {
 
 		Piece[][] boardToBeReturned = new Piece[8][8];
