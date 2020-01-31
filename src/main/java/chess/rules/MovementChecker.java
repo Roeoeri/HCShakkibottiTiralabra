@@ -40,9 +40,20 @@ public class MovementChecker {
 				case WROOK:
 					getLegalRookMoves(board, j, i);
 					break;
+					
+				case WBISHOP:
+					getLegalBishopMoves(board,j,i);
+					break;
+					
+				case WQUEEN:
+					getLegalQueenMoves(board,j,i);
+					break;
+					
+				
 
 				}
-
+				
+				
 			}
 		}
 
@@ -61,7 +72,17 @@ public class MovementChecker {
 				case BROOK:
 					getLegalRookMoves(board, j, i);
 					break;
+					
+				case BBISHOP:
+					getLegalBishopMoves(board,j,i);
+					break;
+					
+				case BQUEEN:
+					getLegalQueenMoves(board,j,i);
+					break;
 				}
+				
+				
 			}
 		}
 	}
@@ -107,11 +128,9 @@ public class MovementChecker {
 
 	}
 
-	public void getLegalRookMoves(Piece[][] board, int x, int y) {
+	private void getLegalRookMoves(Piece[][] board, int x, int y) {
 		
 		Piece ownColor = getColor(board[y][x]);
-		
-		Piece oppositeColor = getOppositeColor(ownColor);
 		
 		traverseUntilEnd(board,x,y,x+1,y,1,0,ownColor);
 		
@@ -120,9 +139,28 @@ public class MovementChecker {
 		traverseUntilEnd(board,x,y,x,y+1,0,1,ownColor);
 		
 		traverseUntilEnd(board,x,y,x,y-1,0,-1,ownColor);
-
-
 	}
+	
+	private void getLegalBishopMoves(Piece[][] board, int x, int y) {
+		
+		Piece ownColor = getColor(board[y][x]);
+		
+		traverseUntilEnd(board,x,y,x-1,y-1,-1,-1,ownColor);
+		
+		traverseUntilEnd(board,x,y,x+1,y-1,1,-1,ownColor);
+		
+		traverseUntilEnd(board,x,y,x-1,y+1,-1,1,ownColor);
+		
+		traverseUntilEnd(board,x,y,x+1,y+1,1,1,ownColor);
+	}
+	
+	private void getLegalQueenMoves(Piece[][] board, int x, int y) {
+		
+		getLegalRookMoves(board,x,y);
+		getLegalBishopMoves(board,x,y);
+	}
+	
+	
 	
 	private void traverseUntilEnd(Piece[][] board,int startX, int startY, int x, int y, int xSteps, int ySteps, Piece ownColor) {
 		if(x >= size || x<min || y >= size || y < min) {
