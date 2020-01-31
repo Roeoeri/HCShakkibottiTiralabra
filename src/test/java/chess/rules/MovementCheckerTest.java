@@ -246,6 +246,7 @@ public class MovementCheckerTest {
     	
     }
     
+    @Test
     public void RooksCaptureRightEnemies() {
     	
   	  Piece[][] testBoard = new Piece[][]{
@@ -265,6 +266,7 @@ public class MovementCheckerTest {
   	
   }
     
+    @Test
     public void RooksCaptureLeftEnemies() {
     	
     	  Piece[][] testBoard = new Piece[][]{
@@ -284,6 +286,7 @@ public class MovementCheckerTest {
     	
     }
     
+    @Test
     public void RooksCaptureForwardEnemies() {
     	
   	  Piece[][] testBoard = new Piece[][]{
@@ -302,6 +305,8 @@ public class MovementCheckerTest {
         assertTrue(result[3][2] == Piece.EMPTY && result[2][2] == Piece.WROOK);
   	
   }
+    
+    @Test
     public void BishopsHaveCorrectNumberOfMoves() {
     	
   	  Piece[][] testBoard = new Piece[][]{
@@ -316,14 +321,14 @@ public class MovementCheckerTest {
     	  
           int moves = checker.getLegalMoves(testBoard, true).size();
           
-          assertEquals(12,moves);
+          assertEquals(11,moves);
           
     	  testBoard = new Piece[][]{
               {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
               {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
-              {Piece.EMPTY, Piece.WPAWN, Piece.EMPTY, Piece.WPAWN, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
+              {Piece.EMPTY, Piece.WHITE, Piece.EMPTY, Piece.WHITE, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
               {Piece.EMPTY, Piece.EMPTY, Piece.WBISHOP, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
-              {Piece.EMPTY, Piece.WPAWN, Piece.EMPTY, Piece.WPAWN, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
+              {Piece.EMPTY, Piece.WHITE, Piece.EMPTY, Piece.WHITE, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
               {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
               {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
               {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY}};
@@ -349,6 +354,7 @@ public class MovementCheckerTest {
           
     }
     
+    @Test
     public void queensHaveCorrectNumberOfMoves() {
     	Piece[][] testBoard = new Piece[][]{
             {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
@@ -362,7 +368,7 @@ public class MovementCheckerTest {
       	  
             int moves = checker.getLegalMoves(testBoard, true).size();
             
-            assertEquals(26,moves);
+            assertEquals(25,moves);
     }
     
     
