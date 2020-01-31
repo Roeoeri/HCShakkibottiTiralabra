@@ -278,7 +278,7 @@ public class MovementCheckerTest {
               {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY}};
               
               
-          Piece[][] result = checker.getLegalMoves(testBoard, false).get(0);
+          Piece[][] result = checker.getLegalMoves(testBoard, true).get(0);
           
           assertTrue(result[3][2] == Piece.EMPTY && result[3][1] == Piece.WROOK);
     	
@@ -297,7 +297,7 @@ public class MovementCheckerTest {
             {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY}};
             
             
-        Piece[][] result = checker.getLegalMoves(testBoard, false).get(0);
+        Piece[][] result = checker.getLegalMoves(testBoard, true).get(0);
         
         assertTrue(result[3][2] == Piece.EMPTY && result[2][2] == Piece.WROOK);
   	
