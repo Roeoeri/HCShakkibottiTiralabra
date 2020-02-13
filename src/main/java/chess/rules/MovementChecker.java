@@ -34,24 +34,28 @@ public class MovementChecker {
                 switch (currentSquare) {
 
                     case WPAWN:
-                        getLegalPawnMoves(board, j, i);
+                        getLegalPawnMoves(board,j,i);
                         break;
 
                     case WROOK:
-                        getLegalRookMoves(board, j, i);
+                        getLegalRookMoves(board,j,i);
                         break;
 
                     case WBISHOP:
-                        getLegalBishopMoves(board, j, i);
+                        getLegalBishopMoves(board,j,i);
                         break;
 
                     case WQUEEN:
-                        getLegalQueenMoves(board, j, i);
+                        getLegalQueenMoves(board,j,i);
                         break;
 
                     case WKING:
-                        getLegalKingMoves(board, j, i);
+                        getLegalKingMoves(board,j,i);
                         break;
+                    
+                    case WKNIGHT:
+                    	getLegalKnightMoves(board,j,i);
+                    	break;
 
                 }
 
@@ -67,23 +71,28 @@ public class MovementChecker {
                 switch (currentSquare) {
 
                     case BPAWN:
-                        getLegalPawnMoves(board, j, i);
+                        getLegalPawnMoves(board,j,i);
                         break;
 
                     case BROOK:
-                        getLegalRookMoves(board, j, i);
+                        getLegalRookMoves(board,j,i);
                         break;
 
                     case BBISHOP:
-                        getLegalBishopMoves(board, j, i);
+                        getLegalBishopMoves(board,j,i);
                         break;
 
                     case BQUEEN:
-                        getLegalQueenMoves(board, j, i);
+                        getLegalQueenMoves(board,j,i);
                         break;
 
                     case BKING:
-                        getLegalKingMoves(board, j, i);
+                        getLegalKingMoves(board,j,i);
+                        break;
+                     
+                    case BKNIGHT:
+                    	getLegalKnightMoves(board,j,i);
+                    	break;
                 }
 
             }
@@ -180,6 +189,31 @@ public class MovementChecker {
             }
         }
     }
+    
+    private void getLegalKnightMoves(Piece[][] board, int x, int y) {
+    	int[] possibleStepsInYCoordinate = new int[]{2,2,1,1,-1,-1,-2,-2};
+    	int[] possibleStepsInXCoordinate = new int[]{-1,1,-2,2,-2,2,-1,1};
+    	
+    	int possibleFinalCoordinates = possibleStepsInYCoordinate.length;
+    	
+    	Piece oppositeColor = getOppositeColor(board[y][x]);
+    	
+    	for(int i = 0; i<possibleFinalCoordinates; i++) {
+    		int newX = x + possibleStepsInXCoordinate[i];
+    		int newY = y + possibleStepsInYCoordinate[i];
+    		
+    		if(newX >= size || newX < min || newY >= size || newY < min){
+    			continue;
+    		}
+    		
+    		Piece destinationTileColor = board[newY][newX];
+    		if(destinationTileColor == oppositeColor || destinationTileColor == Piece.EMPTY) {
+    			Piece[][] move = moveCharacter(board,x,y,newX,newY);
+    			legalMoves.add(move);
+     		}
+    	}
+    	
+    }
 
     private void traverseUntilEnd(Piece[][] board, int startX, int startY, int x, int y, int xSteps, int ySteps, Piece ownColor) {
         if (x >= size || x < min || y >= size || y < min) {
@@ -203,6 +237,7 @@ public class MovementChecker {
 
         traverseUntilEnd(board, startX, startY, x + xSteps, y + ySteps, xSteps, ySteps, ownColor);
     }
+    
 
     private Piece[][] moveCharacter(Piece[][] board, int x1, int y1, int x2, int y2) {
 
