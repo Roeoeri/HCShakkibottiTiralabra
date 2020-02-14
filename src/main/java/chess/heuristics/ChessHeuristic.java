@@ -7,17 +7,14 @@ public class ChessHeuristic {
 	private final int min = 0;
 	private final int max = 8;
 
-	public int evaluateBoard(Piece[][] board, boolean isWhite) {
+	public int evaluateBoard(Piece[][] board) {
 
 		int whiteEvaluation = evaluationWhitePerspective(board);
 		int blackEvaluation = evaluationBlackPerspective(board);
 		
 		
-		if(isWhite) {
-			return whiteEvaluation - blackEvaluation;
-		}
 		
-		return blackEvaluation - whiteEvaluation;	
+		return blackEvaluation + whiteEvaluation;	
 
 	}
 
@@ -31,7 +28,7 @@ public class ChessHeuristic {
 				switch (currentSquare) {
 
 				case WPAWN:
-					sum += 300;
+					sum += 100;
 					break;
 
 				case WROOK:
@@ -53,8 +50,6 @@ public class ChessHeuristic {
 				case WKNIGHT:
 					sum += 320;
 					break;
-				default:
-					break;
 
 				}
 
@@ -73,29 +68,27 @@ public class ChessHeuristic {
 				switch (currentSquare) {
 
 				case BPAWN:
-					sum += 100;
+					sum -= 100;
 					break;
 
 				case BROOK:
-					sum += 500;
+					sum -= 500;
 					break;
 
 				case BBISHOP:
-					sum += 330;
+					sum -= 330;
 					break;
 
 				case BQUEEN:
-					sum += 900;
+					sum -= 900;
 					break;
 
 				case BKING:
-					sum += 20000;
+					sum -= 20000;
 					break;
 
 				case BKNIGHT:
-					sum += 320;
-					break;
-				default:
+					sum -= 320;
 					break;
 
 				}
