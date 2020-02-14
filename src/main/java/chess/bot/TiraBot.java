@@ -22,6 +22,7 @@ public class TiraBot implements ChessBot {
     private MovementChecker checker;
     private ChessHeuristic heuristic;
     private final int maxDepth = 5;
+    private final int minEvalValue = -3000000;
    
 
     public TiraBot() {
@@ -45,10 +46,34 @@ public class TiraBot implements ChessBot {
         return "e1e2";
     }
     
+    
+    private boolean gameOver(Piece[][] board) {
+    	boolean bKingAlive = false;
+    	boolean wKingAlive = false;
+    	int size = board.length;
+    	
+    	for(int i = 0; i< size; i++) {
+    		for(int j = 0; j<size; j++) {
+    			if(board[i][j] == Piece.BKING) {
+    				bKingAlive = true;
+    			}
+    			if(board[i][j] == Piece.WKING) {
+    				wKingAlive = true;
+    			}
+    		}
+    	}
+    	
+    	if(bKingAlive && wKingAlive) {
+			return false;
+		}
+		
+		return true;
+    }
+    
     private int maxValue(Piece[][] board, int depth){
     	ArrayList<Piece[][]> children = checker.getLegalMoves(board, true);
     	
-    	if(depth == maxDepth || children.size() == 0) {
+    	if(depth == maxDepth || children.size() == 0 || gameOver(board)) {
     		return heuristic.evaluateBoard(board);
     	}
     	
@@ -62,7 +87,7 @@ public class TiraBot implements ChessBot {
     private int minValue(Piece[][] board, int depth){
 	ArrayList<Piece[][]> children = checker.getLegalMoves(board, false);
     	
-    	if(depth == maxDepth || children.size() == 0) {
+    	if(depth == maxDepth || children.size() == 0 || gameOver(board)) {
     		return heuristic.evaluateBoard(board);
     	}
     	
@@ -73,11 +98,12 @@ public class TiraBot implements ChessBot {
     	return v;    
     }
     
+    
     public Piece[][] getBestWhiteMove(Piece[][] board){
     	ArrayList<Piece[][]> children = checker.getLegalMoves(board, true);
     	
     	Piece[][] bestNode = null;
-    	int bestValue = -3000000;
+    	int bestValue = minEvalValue;
     	for(Piece[][] child : children) {
     		int score = minValue(child,0);
     		if(score > bestValue) {
