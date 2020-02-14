@@ -206,7 +206,7 @@ public class MovementChecker {
     			continue;
     		}
     		
-    		Piece destinationTileColor = board[newY][newX];
+    		Piece destinationTileColor = getColor(board[newY][newX]);
     		if(destinationTileColor == oppositeColor || destinationTileColor == Piece.EMPTY) {
     			Piece[][] move = moveCharacter(board,x,y,newX,newY);
     			legalMoves.add(move);
