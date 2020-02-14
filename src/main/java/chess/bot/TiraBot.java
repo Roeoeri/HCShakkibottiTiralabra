@@ -5,7 +5,11 @@
  */
 package chess.bot;
 
+import java.util.ArrayList;
+
 import chess.engine.GameState;
+import chess.heuristics.ChessHeuristic;
+import chess.rules.MovementChecker;
 import chess.rules.Piece;
 
 /**
@@ -14,12 +18,15 @@ import chess.rules.Piece;
  */
 public class TiraBot implements ChessBot {
 
-    public Piece[][] board;
-    public Piece[] blackPawns;
+    private Piece[][] currentboard;
+    private MovementChecker checker;
+    private ChessHeuristic heuristic;
+    private final int maxDepth = 5;
+   
 
     public TiraBot() {
 
-        board = new Piece[][]{
+        currentboard = new Piece[][]{
             {Piece.WROOK, Piece.WKNIGHT, Piece.WBISHOP, Piece.WQUEEN, Piece.WKING, Piece.WBISHOP, Piece.WKNIGHT, Piece.WROOK},
             {Piece.WPAWN, Piece.WPAWN, Piece.WPAWN, Piece.WPAWN, Piece.WPAWN, Piece.WPAWN, Piece.WPAWN, Piece.WPAWN},
             {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
@@ -28,12 +35,74 @@ public class TiraBot implements ChessBot {
             {Piece.BPAWN, Piece.BPAWN, Piece.BPAWN, Piece.BPAWN, Piece.BPAWN, Piece.BPAWN, Piece.BPAWN, Piece.BPAWN},
             {Piece.BROOK, Piece.BKNIGHT, Piece.BBISHOP, Piece.BQUEEN, Piece.BKING, Piece.BBISHOP, Piece.BKNIGHT, Piece.BROOK}
         };
+        
+        checker = new MovementChecker();
+        heuristic = new ChessHeuristic();
     }
 
     @Override
     public String nextMove(GameState gs) {
         return "e1e2";
     }
+    
+    private int maxValue(Piece[][] board, int depth){
+    	ArrayList<Piece[][]> children = checker.getLegalMoves(board, true);
+    	
+    	if(depth == maxDepth || children.size() == 0) {
+    		return heuristic.evaluateBoard(board);
+    	}
+    	
+    	int v = Integer.MIN_VALUE;
+    	for(Piece[][] child : children) {
+    		v= Math.max(v, minValue(child, depth+1));
+    	}
+    	return v;    	
+    }
+    
+    private int minValue(Piece[][] board, int depth){
+	ArrayList<Piece[][]> children = checker.getLegalMoves(board, false);
+    	
+    	if(depth == maxDepth || children.size() == 0) {
+    		return heuristic.evaluateBoard(board);
+    	}
+    	
+    	int v = Integer.MAX_VALUE;
+    	for(Piece[][] child : children) {
+    		v= Math.min(v, maxValue(child, depth+1));
+    	}
+    	return v;    
+    }
+    
+    public Piece[][] getBestWhiteMove(Piece[][] board){
+    	ArrayList<Piece[][]> children = checker.getLegalMoves(board, true);
+    	
+    	Piece[][] bestNode = null;
+    	int bestValue = -3000000;
+    	for(Piece[][] child : children) {
+    		int score = minValue(child,0);
+    		if(score > bestValue) {
+    			bestValue = score;
+    			bestNode = child;
+    		}
+    	}
+    	
+    	return bestNode;
+    		
+    }
+    
+
+    
+	public void printBoard(Piece[][] board) {
+		for(int i = 0; i<8; i++) {
+			for(int j = 0; j<8; j++) {
+				System.out.print(board[i][j] +" ");
+			}
+			System.out.println();
+		}
+	}
+    
+    
+    
 
     public void updateBoard(String move) {
 
@@ -43,10 +112,10 @@ public class TiraBot implements ChessBot {
         int x2 = move.charAt(2) - 97;
         int y2 = move.charAt(3) - 49;
 
-        Piece PieceToBeMoved = board[y1][x1];
+        Piece PieceToBeMoved = currentboard[y1][x1];
 
-        board[y1][x1] = Piece.EMPTY;
-        board[y2][x2] = PieceToBeMoved;
+        currentboard[y1][x1] = Piece.EMPTY;
+        currentboard[y2][x2] = PieceToBeMoved;
 
     }
 
