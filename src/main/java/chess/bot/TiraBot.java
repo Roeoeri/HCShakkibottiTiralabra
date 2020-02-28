@@ -187,8 +187,6 @@ public class TiraBot implements ChessBot {
 	}
     
     
-    
-
     public void updateBoard(String move) {
 
         int x1 = move.charAt(0) - 97;
