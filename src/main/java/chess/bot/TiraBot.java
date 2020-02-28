@@ -196,8 +196,17 @@ public class TiraBot implements ChessBot {
 
         int x2 = move.charAt(2) - 97;
         int y2 = move.charAt(3) - 49;
-
+        
+        
         Piece PieceToBeMoved = currentboard[y1][x1];
+        
+        if(move.length() > 4) {
+        	if(checker.getColor(PieceToBeMoved) == Piece.WHITE) {
+        		PieceToBeMoved = Piece.WQUEEN;
+        	}else {
+        		PieceToBeMoved = Piece.BQUEEN;
+        	}
+        }
 
         currentboard[y1][x1] = Piece.EMPTY;
         currentboard[y2][x2] = PieceToBeMoved;
