@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import chess.engine.GameState;
 import chess.heuristics.ChessHeuristic;
+import chess.model.Side;
 import chess.rules.MovementChecker;
 import chess.rules.Piece;
 
@@ -21,8 +22,9 @@ public class TiraBot implements ChessBot {
     private Piece[][] currentboard;
     private MovementChecker checker;
     private ChessHeuristic heuristic;
-    private final int maxDepth = 5;
+    private final int maxDepth = 3;
     private final int minEvalValue = -3000000;
+    private final int maxEvalValue =  3000000;
    
 
     public TiraBot() {
@@ -30,6 +32,7 @@ public class TiraBot implements ChessBot {
         currentboard = new Piece[][]{
             {Piece.WROOK, Piece.WKNIGHT, Piece.WBISHOP, Piece.WQUEEN, Piece.WKING, Piece.WBISHOP, Piece.WKNIGHT, Piece.WROOK},
             {Piece.WPAWN, Piece.WPAWN, Piece.WPAWN, Piece.WPAWN, Piece.WPAWN, Piece.WPAWN, Piece.WPAWN, Piece.WPAWN},
+            {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
             {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
             {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
             {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
@@ -43,7 +46,43 @@ public class TiraBot implements ChessBot {
 
     @Override
     public String nextMove(GameState gs) {
-        return "e1e2";
+    	if(gs.getMoveCount() > 0) {
+    		updateBoard(gs.getLatestMove());
+    	}
+    	
+    	Piece[][] play = null;
+    	if(gs.playing == Side.BLACK) {
+    		play = getBestBlackMove(currentboard);
+    	}else {
+    		play = getBestWhiteMove(currentboard);
+    	}
+    	
+    	String move = parseMove(currentboard,play);
+    	currentboard = play;
+        return move;
+    }
+    
+    public String parseMove(Piece[][] startBoard, Piece[][] endBoard) {
+    	String endPoint = "";
+    	String startPoint = "";
+    	for(int i = 0; i< 8; i++) {
+    		for(int j = 0; j<8; j++) {
+    		   	Piece startPiece = startBoard[i][j];
+    		   	Piece endPiece = endBoard[i][j];
+    		   	
+    			String row = String.valueOf((char) (i + 49));
+    		    String column = String.valueOf((char) (j + 97));
+    			if(startPiece != endPiece) {
+    				if(endPiece == Piece.EMPTY) {
+    					startPoint = column + row;
+    				}else {
+    					endPoint = column+row;
+    				}
+    			}
+    			
+    		}
+    	}
+    	return startPoint + endPoint;
     }
     
     
@@ -111,9 +150,22 @@ public class TiraBot implements ChessBot {
     			bestNode = child;
     		}
     	}
+    	return bestNode;	
+    }
+    
+    public Piece[][] getBestBlackMove(Piece[][] board){
+    	ArrayList<Piece[][]> children = checker.getLegalMoves(board, false);
     	
-    	return bestNode;
-    		
+    	Piece[][] bestNode = null;
+    	int bestValue = maxEvalValue;
+    	for(Piece[][] child : children) {
+    		int score = maxValue(child,0);
+    		if(score < bestValue) {
+    			bestValue = score;
+    			bestNode = child;
+    		}
+    	}
+    	return bestNode;	
     }
     
 
