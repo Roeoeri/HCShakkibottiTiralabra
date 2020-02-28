@@ -175,17 +175,6 @@ public class TiraBot implements ChessBot {
     	return bestNode;	
     }
     
-
-    
-	public void printBoard(Piece[][] board) {
-		for(int i = 0; i<8; i++) {
-			for(int j = 0; j<8; j++) {
-				System.out.print(board[i][j] +" ");
-			}
-			System.out.println();
-		}
-	}
-    
     
     public void updateBoard(String move) {
 
@@ -208,7 +197,6 @@ public class TiraBot implements ChessBot {
 
         currentboard[y1][x1] = Piece.EMPTY;
         currentboard[y2][x2] = PieceToBeMoved;
-
     }
 
 }
