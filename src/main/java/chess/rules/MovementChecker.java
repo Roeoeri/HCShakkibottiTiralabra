@@ -5,7 +5,8 @@
  */
 package chess.rules;
 
-import java.util.ArrayList;
+
+import chess.datastructures.ChessList;
 
 /**
  *
@@ -13,12 +14,12 @@ import java.util.ArrayList;
  */
 public class MovementChecker {
 
-    private ArrayList<Piece[][]> legalMoves;
+    private ChessList<Piece[][]> legalMoves;
     private final int size = 8;
     private final int min = 0;
 
-    public ArrayList<Piece[][]> getLegalMoves(Piece[][] board, boolean isWhite) {
-        legalMoves = new ArrayList();
+    public ChessList<Piece[][]> getLegalMoves(Piece[][] board, boolean isWhite) {
+        legalMoves = new ChessList<Piece[][]>();
         if (isWhite) {
             getLegalWhiteMoves(board);
         } else {

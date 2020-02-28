@@ -5,8 +5,7 @@
  */
 package chess.bot;
 
-import java.util.ArrayList;
-
+import chess.datastructures.ChessList;
 import chess.engine.GameState;
 import chess.heuristics.ChessHeuristic;
 import chess.model.Side;
@@ -110,7 +109,7 @@ public class TiraBot implements ChessBot {
     }
     
     private int maxValue(Piece[][] board, int depth, int alpha, int beta){
-    	ArrayList<Piece[][]> children = checker.getLegalMoves(board, true);
+    	ChessList<Piece[][]> children = checker.getLegalMoves(board, true);
     	
     	if(depth == maxDepth || children.size() == 0 || gameOver(board)) {
     		return heuristic.evaluateBoard(board);
@@ -128,7 +127,7 @@ public class TiraBot implements ChessBot {
     }
     
     private int minValue(Piece[][] board, int depth, int alpha, int beta){
-	ArrayList<Piece[][]> children = checker.getLegalMoves(board, false);
+	ChessList<Piece[][]> children = checker.getLegalMoves(board, false);
     	
     	if(depth == maxDepth || children.size() == 0 || gameOver(board)) {
     		return heuristic.evaluateBoard(board);
@@ -147,7 +146,7 @@ public class TiraBot implements ChessBot {
     
     
     public Piece[][] getBestWhiteMove(Piece[][] board){
-    	ArrayList<Piece[][]> children = checker.getLegalMoves(board, true);
+    	ChessList<Piece[][]> children = checker.getLegalMoves(board, true);
     	
     	Piece[][] bestNode = null;
     	int bestValue = minEvalValue;
@@ -162,7 +161,7 @@ public class TiraBot implements ChessBot {
     }
     
     public Piece[][] getBestBlackMove(Piece[][] board){
-    	ArrayList<Piece[][]> children = checker.getLegalMoves(board, false);
+    	ChessList<Piece[][]> children = checker.getLegalMoves(board, false);
     	
     	Piece[][] bestNode = null;
     	int bestValue = maxEvalValue;

@@ -5,12 +5,15 @@
  */
 package chess.rules;
 
-import java.util.ArrayList;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import chess.datastructures.ChessList;
+
 import static org.junit.Assert.*;
 
 /**
@@ -61,7 +64,7 @@ public class MovementCheckerTest {
             {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},};
             
         
-       ArrayList<Piece[][]> result = checker.getLegalMoves(testBoard, false);
+       ChessList<Piece[][]> result = checker.getLegalMoves(testBoard, false);
        
        Piece[][] resultBoard = result.get(0);
 
@@ -83,7 +86,7 @@ public class MovementCheckerTest {
             {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
             {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},};
 
-        ArrayList<Piece[][]> result = checker.getLegalMoves(testBoard, true);
+        ChessList<Piece[][]> result = checker.getLegalMoves(testBoard, true);
 
         Piece[][] resultBoard = result.get(0);
 
@@ -104,7 +107,7 @@ public class MovementCheckerTest {
             {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
             {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},};
 
-        ArrayList<Piece[][]> result = checker.getLegalMoves(testBoard, true);
+        ChessList<Piece[][]> result = checker.getLegalMoves(testBoard, true);
 
         assertTrue(result.size() == 3);
 
@@ -123,7 +126,7 @@ public class MovementCheckerTest {
             {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
             {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},};
 
-        ArrayList<Piece[][]> result = checker.getLegalMoves(testBoard, false);
+        ChessList<Piece[][]> result = checker.getLegalMoves(testBoard, false);
 
         assertTrue(result.size() == 3);
 
