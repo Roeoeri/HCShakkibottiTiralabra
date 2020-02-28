@@ -109,7 +109,7 @@ public class TiraBot implements ChessBot {
 		return true;
     }
     
-    private int maxValue(Piece[][] board, int depth){
+    private int maxValue(Piece[][] board, int depth, int alpha, int beta){
     	ArrayList<Piece[][]> children = checker.getLegalMoves(board, true);
     	
     	if(depth == maxDepth || children.size() == 0 || gameOver(board)) {
@@ -118,12 +118,16 @@ public class TiraBot implements ChessBot {
     	
     	int v = Integer.MIN_VALUE;
     	for(Piece[][] child : children) {
-    		v= Math.max(v, minValue(child, depth+1));
+    		v= Math.max(v, minValue(child, depth+1, alpha,beta));
+    		alpha = Math.max(alpha, v);
+    		if(alpha >= beta) {
+    			return v;
+    		}
     	}
     	return v;    	
     }
     
-    private int minValue(Piece[][] board, int depth){
+    private int minValue(Piece[][] board, int depth, int alpha, int beta){
 	ArrayList<Piece[][]> children = checker.getLegalMoves(board, false);
     	
     	if(depth == maxDepth || children.size() == 0 || gameOver(board)) {
@@ -132,7 +136,11 @@ public class TiraBot implements ChessBot {
     	
     	int v = Integer.MAX_VALUE;
     	for(Piece[][] child : children) {
-    		v= Math.min(v, maxValue(child, depth+1));
+    		v= Math.min(v, maxValue(child, depth+1,alpha,beta));
+    		beta = Math.min(beta, v);
+    		if(alpha >= beta) {
+    			return v;
+    		}
     	}
     	return v;    
     }
@@ -144,7 +152,7 @@ public class TiraBot implements ChessBot {
     	Piece[][] bestNode = null;
     	int bestValue = minEvalValue;
     	for(Piece[][] child : children) {
-    		int score = minValue(child,0);
+    		int score = minValue(child,0,minEvalValue,maxEvalValue);
     		if(score > bestValue) {
     			bestValue = score;
     			bestNode = child;
@@ -159,7 +167,7 @@ public class TiraBot implements ChessBot {
     	Piece[][] bestNode = null;
     	int bestValue = maxEvalValue;
     	for(Piece[][] child : children) {
-    		int score = maxValue(child,0);
+    		int score = maxValue(child,0,minEvalValue,maxEvalValue);
     		if(score < bestValue) {
     			bestValue = score;
     			bestNode = child;
