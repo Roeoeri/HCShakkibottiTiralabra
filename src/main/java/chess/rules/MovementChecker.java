@@ -109,7 +109,7 @@ public class MovementChecker {
         }
 
         int yUp = y + pawnStep;
-        if (yUp < size) {
+        if (yUp < size && yUp >= 0) {
             Piece contentOfTile = board[yUp][x];
             if (contentOfTile == Piece.EMPTY) {
                 Piece[][] moveUp = moveCharacter(board, x, y, x, yUp);
