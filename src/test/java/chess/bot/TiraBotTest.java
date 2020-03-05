@@ -95,15 +95,21 @@ public class TiraBotTest {
 	}
 	
 	@Test
-	public void botGeneratesPlayInAReasonableAmountOfTime() {
+	public void botGeneratesPlayInAReasonableAmountOfTimeOnAverage() {
+
+		int totalTime = 0;
 		
 		for(int i = 0; i< 100; i++) {
 			long startTime = System.nanoTime();
 			bot.getBestBlackMove(generateRandomTestBoard());
 			long endTime = System.nanoTime();
 			long duration = (endTime - startTime)/1000000000;
-			assertTrue(duration < 30);
+			totalTime += duration;
+			
 		}
+
+		double avg = (double) totalTime / 100;
+		assertTrue(avg < 10);
 
 	}
 	
