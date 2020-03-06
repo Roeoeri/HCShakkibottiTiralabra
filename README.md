@@ -1,7 +1,12 @@
 # HCShakkibottiTiralabra 2020 kevät
 
-## Määrittelydokumentti
+## Dokumentaatio
 [Määrittelydokumentti](https://github.com/Roeoeri/HCShakkibottiTiralabra/blob/master/dokumentaatio/Maarittelydokumentti.md)
+[Käyttöohje](https://github.com/Roeoeri/HCShakkibottiTiralabra/blob/master/dokumentaatio/Kayttoohje.md)
+[Testausdokumentti](https://github.com/Roeoeri/HCShakkibottiTiralabra/blob/master/dokumentaatio/Testaus.md)
+[Toteutusdokumentti](https://github.com/Roeoeri/HCShakkibottiTiralabra/blob/master/dokumentaatio/Toteutus.md)
+
+
 
 ## Viikkoraportit
 [Viikko1](https://github.com/Roeoeri/HCShakkibottiTiralabra/blob/master/dokumentaatio/viikkoraportit/viikko1.md)
