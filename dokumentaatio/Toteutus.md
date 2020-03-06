@@ -17,6 +17,7 @@ Pahimmassa tapauksessa aikavaativuus on O(b^d) missä b on pelitilanteesta seura
 
 ### Parannukset
 Työhön jäi jonkin verran parannettavaa. Pelimoottorin osalta voisi lisätä enemmän shakin erikoistilanteita, kuten linnoitus tai nappuloiden ylentäminen. Botti osaa kyllä nytkin ottaa huomioon, mikäli vastustaja ylentää sotilaitaan, mutta itse botti ei osaa nappuloita ylentää.
-  Tehokkuuden puolesta olisi voinut keksiä jonkin tavan, millä mahdollisia siirtoja olisi voinut laskea nopeammin. Tällä hetkellä mahdollisten siirtojen laskeminen vie jonkin verran aikaa, mikä on pois algoritmin tehokkuudesta. 
+
+Tehokkuuden puolesta olisi voinut keksiä jonkin tavan, millä mahdollisia siirtoja olisi voinut laskea nopeammin. Tällä hetkellä mahdollisten siirtojen laskeminen vie jonkin verran aikaa, mikä on pois algoritmin tehokkuudesta. 
   
 
