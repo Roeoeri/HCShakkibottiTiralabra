@@ -3,8 +3,6 @@
  */
 package chess;
 
-
-
 import chess.bot.TiraBot;
 import chess.connection.LichessAPI;
 import chess.model.Profile;
@@ -31,13 +29,12 @@ public class App {
                 token = arg.substring(8);
             }
         }
-        
+
         /*
         You need to place your bot implementation to the variable below.
         Make sure it implements the interface ChessBot, and don't change the variable name!
-        */
+         */
         TiraBot bot = new TiraBot(3); // Your bot here!
-        
 
         if (isLichess) {
             if (token == null) {
@@ -47,7 +44,7 @@ public class App {
             Profile myProfile = api.getAccount();
             System.out.println("Profile ID: " + myProfile.id);
             api.beginEventLoop();
-            
+
         } else {
 
             Long initialTime = System.currentTimeMillis();

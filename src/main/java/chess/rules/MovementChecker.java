@@ -5,7 +5,6 @@
  */
 package chess.rules;
 
-
 import chess.datastructures.ChessList;
 
 /**
@@ -18,10 +17,13 @@ public class MovementChecker {
     private final int size = 8;
     private final int min = 0;
 
-    
-    /** Palauttaa listan laillisista siirroista joita on saatavilla annetusta pelitilanteesta.
+    /**
+     * Palauttaa listan laillisista siirroista joita on saatavilla annetusta
+     * pelitilanteesta.
+     *
      * @param board Pelitilanne, jota halutaan tarkastella.
-     * @param isWhite true tarkoittaa, että tarkastellaan valkoisia siirtoja, false puolestaan mustia.
+     * @param isWhite true tarkoittaa, että tarkastellaan valkoisia siirtoja,
+     * false puolestaan mustia.
      * @return ChessList<Piece[][]> Lista laillisista siirroista.
      */
     public ChessList<Piece[][]> getLegalMoves(Piece[][] board, boolean isWhite) {
@@ -34,8 +36,10 @@ public class MovementChecker {
         return legalMoves;
     }
 
-    
-    /** Lisää luokan sisäiseen listaan laillisia valkoisen siirtoja annetusta pelitilanteesta.
+    /**
+     * Lisää luokan sisäiseen listaan laillisia valkoisen siirtoja annetusta
+     * pelitilanteesta.
+     *
      * @param board Pelitilanne jota halutaan tarkastella.
      */
     private void getLegalWhiteMoves(Piece[][] board) {
@@ -45,28 +49,28 @@ public class MovementChecker {
                 switch (currentSquare) {
 
                     case WPAWN:
-                        getLegalPawnMoves(board,j,i);
+                        getLegalPawnMoves(board, j, i);
                         break;
 
                     case WROOK:
-                        getLegalRookMoves(board,j,i);
+                        getLegalRookMoves(board, j, i);
                         break;
 
                     case WBISHOP:
-                        getLegalBishopMoves(board,j,i);
+                        getLegalBishopMoves(board, j, i);
                         break;
 
                     case WQUEEN:
-                        getLegalQueenMoves(board,j,i);
+                        getLegalQueenMoves(board, j, i);
                         break;
 
                     case WKING:
-                        getLegalKingMoves(board,j,i);
+                        getLegalKingMoves(board, j, i);
                         break;
-                    
+
                     case WKNIGHT:
-                    	getLegalKnightMoves(board,j,i);
-                    	break;
+                        getLegalKnightMoves(board, j, i);
+                        break;
 
                 }
 
@@ -75,8 +79,10 @@ public class MovementChecker {
 
     }
 
-    
-    /** Lisää luokan sisäiseen listaan laillisia mustan siirtoja annetusta pelitilanteesta.
+    /**
+     * Lisää luokan sisäiseen listaan laillisia mustan siirtoja annetusta
+     * pelitilanteesta.
+     *
      * @param board Pelitilanne jota halutaan tarkastella.
      */
     private void getLegalBlackMoves(Piece[][] board) {
@@ -86,51 +92,53 @@ public class MovementChecker {
                 switch (currentSquare) {
 
                     case BPAWN:
-                        getLegalPawnMoves(board,j,i);
+                        getLegalPawnMoves(board, j, i);
                         break;
 
                     case BROOK:
-                        getLegalRookMoves(board,j,i);
+                        getLegalRookMoves(board, j, i);
                         break;
 
                     case BBISHOP:
-                        getLegalBishopMoves(board,j,i);
+                        getLegalBishopMoves(board, j, i);
                         break;
 
                     case BQUEEN:
-                        getLegalQueenMoves(board,j,i);
+                        getLegalQueenMoves(board, j, i);
                         break;
 
                     case BKING:
-                        getLegalKingMoves(board,j,i);
+                        getLegalKingMoves(board, j, i);
                         break;
-                     
+
                     case BKNIGHT:
-                    	getLegalKnightMoves(board,j,i);
-                    	break;
+                        getLegalKnightMoves(board, j, i);
+                        break;
                 }
 
             }
         }
     }
 
-    
-    /**  Tarkistaa onko annetuissa koordinaateissa sotilasta, joka voi liikkua kaksi askelta. Jos on niin lisätään se listaan.
+    /**
+     * Tarkistaa onko annetuissa koordinaateissa sotilasta, joka voi liikkua
+     * kaksi askelta. Jos on niin lisätään se listaan.
+     *
      * @param board Pelitilanne jota halutaan tarkastella.
      * @param x Sotilaan sarake
      * @param y Sotilaan rivi
      */
-    private void getTwoSquarePawnMove(Piece[][] board, int x, int y){
+    private void getTwoSquarePawnMove(Piece[][] board, int x, int y) {
         Piece pawn = board[y][x];
-     
-        if(pawn == Piece.BPAWN && y == 6){
-            if(board[y-1][x] == Piece.EMPTY && board[y-2][x] == Piece.EMPTY){
-                Piece[][] move = moveCharacter(board, x, y, x, y -2);
+
+        if (pawn == Piece.BPAWN && y == 6) {
+            if (board[y - 1][x] == Piece.EMPTY && board[y - 2][x] == Piece.EMPTY) {
+                Piece[][] move = moveCharacter(board, x, y, x, y - 2);
                 legalMoves.add(move);
             }
         }
-        if(pawn == Piece.WPAWN && y == 1){
-            if(board[y + 1][x] == Piece.EMPTY && board[y + 2][x] == Piece.EMPTY){
+        if (pawn == Piece.WPAWN && y == 1) {
+            if (board[y + 1][x] == Piece.EMPTY && board[y + 2][x] == Piece.EMPTY) {
                 Piece[][] move = moveCharacter(board, x, y, x, y + 2);
                 legalMoves.add(move);
             }
@@ -138,11 +146,12 @@ public class MovementChecker {
 
     }
 
-    
-    /** Lisää listaan normaalitilanteissa sallittuja sotilaan liikkeitä.
+    /**
+     * Lisää listaan normaalitilanteissa sallittuja sotilaan liikkeitä.
+     *
      * @param board Pelitilanne, jota halutaan tarkastella.
-     * @param x  Sotilaan sarake
-     * @param y  Sotilaan rivi
+     * @param x Sotilaan sarake
+     * @param y Sotilaan rivi
      */
     private void getReqularPawnMoves(Piece[][] board, int x, int y) {
         Piece pawn = board[y][x];
@@ -185,19 +194,21 @@ public class MovementChecker {
 
     }
 
-    
-    /** Lisää listaan kaikki sotilaiden lailliset siirrot.
+    /**
+     * Lisää listaan kaikki sotilaiden lailliset siirrot.
+     *
      * @param board Pelitilanne, jota halutaan tarkastella
      * @param x Sotilaan sarake.
      * @param y Sotilaan rivi
      */
-    private void getLegalPawnMoves(Piece[][] board , int x, int y){
+    private void getLegalPawnMoves(Piece[][] board, int x, int y) {
         getTwoSquarePawnMove(board, x, y);
-        getReqularPawnMoves(board, x, y); 
+        getReqularPawnMoves(board, x, y);
     }
 
-    
-    /** Lisää listaan sallitut tornin liikkeet
+    /**
+     * Lisää listaan sallitut tornin liikkeet
+     *
      * @param board Pelitilanne, jota halutaan tarkastella.
      * @param x Tornin sarake
      * @param y Tornin rivi
@@ -215,8 +226,9 @@ public class MovementChecker {
         traverseUntilEnd(board, x, y, x, y - 1, 0, -1, ownColor);
     }
 
-    
-    /**  Lisää listaan sallitut lähetin liikkeet
+    /**
+     * Lisää listaan sallitut lähetin liikkeet
+     *
      * @param board Pelitilanne, jota halutaan tarkastella
      * @param x Lähetin Sarake
      * @param y Lähetin Rivi
@@ -234,8 +246,9 @@ public class MovementChecker {
         traverseUntilEnd(board, x, y, x + 1, y + 1, 1, 1, ownColor);
     }
 
-    
-    /** Lisää listaan sallitut kuningattaren liikkeet
+    /**
+     * Lisää listaan sallitut kuningattaren liikkeet
+     *
      * @param board Pelitilanne jota halutaan tarkastella.
      * @param x Kuningattaren sarake.
      * @param y Kuningattaren rivi.
@@ -246,8 +259,9 @@ public class MovementChecker {
         getLegalBishopMoves(board, x, y);
     }
 
-    
-    /** Lisää listaan sallitut kuninkaan liikkeet
+    /**
+     * Lisää listaan sallitut kuninkaan liikkeet
+     *
      * @param board Pelitilanne jota halutaan tarkastella.
      * @param x Kuninkaan sarake
      * @param y Kuninkaan rivi
@@ -269,40 +283,43 @@ public class MovementChecker {
             }
         }
     }
-    
-    
-    /**  Lisää listaan sallitut ratsun liikkeet
+
+    /**
+     * Lisää listaan sallitut ratsun liikkeet
+     *
      * @param board Pelitilanne, jota halutaan tarkastella
      * @param x Ratsun sarake.
      * @param y Ratsun rivi.
      */
     private void getLegalKnightMoves(Piece[][] board, int x, int y) {
-    	int[] possibleStepsInYCoordinate = new int[]{2,2,1,1,-1,-1,-2,-2};
-    	int[] possibleStepsInXCoordinate = new int[]{-1,1,-2,2,-2,2,-1,1};
-    	
-    	int possibleFinalCoordinates = possibleStepsInYCoordinate.length;
-    	
-    	Piece oppositeColor = getOppositeColor(board[y][x]);
-    	
-    	for(int i = 0; i<possibleFinalCoordinates; i++) {
-    		int newX = x + possibleStepsInXCoordinate[i];
-    		int newY = y + possibleStepsInYCoordinate[i];
-    		
-    		if(newX >= size || newX < min || newY >= size || newY < min){
-    			continue;
-    		}
-    		
-    		Piece destinationTileColor = getColor(board[newY][newX]);
-    		if(destinationTileColor == oppositeColor || destinationTileColor == Piece.EMPTY) {
-    			Piece[][] move = moveCharacter(board,x,y,newX,newY);
-    			legalMoves.add(move);
-     		}
-    	}
-    	
+        int[] possibleStepsInYCoordinate = new int[]{2, 2, 1, 1, -1, -1, -2, -2};
+        int[] possibleStepsInXCoordinate = new int[]{-1, 1, -2, 2, -2, 2, -1, 1};
+
+        int possibleFinalCoordinates = possibleStepsInYCoordinate.length;
+
+        Piece oppositeColor = getOppositeColor(board[y][x]);
+
+        for (int i = 0; i < possibleFinalCoordinates; i++) {
+            int newX = x + possibleStepsInXCoordinate[i];
+            int newY = y + possibleStepsInYCoordinate[i];
+
+            if (newX >= size || newX < min || newY >= size || newY < min) {
+                continue;
+            }
+
+            Piece destinationTileColor = getColor(board[newY][newX]);
+            if (destinationTileColor == oppositeColor || destinationTileColor == Piece.EMPTY) {
+                Piece[][] move = moveCharacter(board, x, y, newX, newY);
+                legalMoves.add(move);
+            }
+        }
+
     }
 
-    
-    /** Käy rekursiivisesti läpi ruutuja, jotka ovat vaaka- tai pystysuorassa tai vinossa aloitusruutun nähden
+    /**
+     * Käy rekursiivisesti läpi ruutuja, jotka ovat vaaka- tai pystysuorassa tai
+     * vinossa aloitusruutun nähden
+     *
      * @param board Pelitilanne jota halutaan tarkastella.
      * @param startX Aloitussarake
      * @param startY Aloitusrivi
@@ -334,10 +351,11 @@ public class MovementChecker {
 
         traverseUntilEnd(board, startX, startY, x + xSteps, y + ySteps, xSteps, ySteps, ownColor);
     }
-    
 
-    
-    /** Luo uuden laudan, jossa nappula on siirretty alkupisteestä loppupisteeseen.
+    /**
+     * Luo uuden laudan, jossa nappula on siirretty alkupisteestä
+     * loppupisteeseen.
+     *
      * @param board Pelilauta
      * @param x1 Alkusarake
      * @param y1 Alkurivi
@@ -362,8 +380,9 @@ public class MovementChecker {
         return boardToBeReturned;
     }
 
-    
-    /** Palauttaa nappulan värin
+    /**
+     * Palauttaa nappulan värin
+     *
      * @param piece Nappula
      * @return Piece Nappulan väri
      */
@@ -378,8 +397,9 @@ public class MovementChecker {
 
     }
 
-    
-    /** Palauttaa nappulan vastakkaisen värin
+    /**
+     * Palauttaa nappulan vastakkaisen värin
+     *
      * @param piece Nappula
      * @return Piece Vastakkainen väri.
      */

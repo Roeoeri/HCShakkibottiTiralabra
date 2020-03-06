@@ -4,115 +4,116 @@ import chess.rules.Piece;
 
 public class ChessHeuristic {
 
-	private final int min = 0;
-	private final int max = 8;
+    private final int min = 0;
+    private final int max = 8;
 
-	
-	/** Palauttaa numeroarvion siitä, kummalla pelaajalla on parametrina annetulla laudalla parempi asema. Positiivinen arvo tarkoittaa valkoista, negatiivinen mustaa.
-	 * @param board Lauta jota halutaan arvioida.
-	 * @return int Numeroarvio pelaajien asemasta.
-	 */
-	public int evaluateBoard(Piece[][] board) {
+    /**
+     * Palauttaa numeroarvion siitä, kummalla pelaajalla on parametrina
+     * annetulla laudalla parempi asema. Positiivinen arvo tarkoittaa valkoista,
+     * negatiivinen mustaa.
+     *
+     * @param board Lauta jota halutaan arvioida.
+     * @return int Numeroarvio pelaajien asemasta.
+     */
+    public int evaluateBoard(Piece[][] board) {
 
-		int whiteEvaluation = evaluationWhitePerspective(board);
-		int blackEvaluation = evaluationBlackPerspective(board);
-		
-		
-		
-		return blackEvaluation + whiteEvaluation;	
+        int whiteEvaluation = evaluationWhitePerspective(board);
+        int blackEvaluation = evaluationBlackPerspective(board);
 
-	}
+        return blackEvaluation + whiteEvaluation;
 
-	
-	/** Arvioi valkoisen asemaa hänellä olevien nappuloiden perusteella.
-	 * @param board Pelitilanne jota halutaan arvioida.
-	 * @return int Palauttaa summan nappuloista kerrottuna niiden arvolla.
-	 */
-	private int evaluationWhitePerspective(Piece[][] board) {
-		int sum = 0;
+    }
 
-		for (int j = 0; j < max; j++) {
-			for (int i = 0; i < max; i++) {
+    /**
+     * Arvioi valkoisen asemaa hänellä olevien nappuloiden perusteella.
+     *
+     * @param board Pelitilanne jota halutaan arvioida.
+     * @return int Palauttaa summan nappuloista kerrottuna niiden arvolla.
+     */
+    private int evaluationWhitePerspective(Piece[][] board) {
+        int sum = 0;
 
-				Piece currentSquare = board[j][i];
-				switch (currentSquare) {
+        for (int j = 0; j < max; j++) {
+            for (int i = 0; i < max; i++) {
 
-				case WPAWN:
-					sum += 100;
-					break;
+                Piece currentSquare = board[j][i];
+                switch (currentSquare) {
 
-				case WROOK:
-					sum += 500;
-					break;
+                    case WPAWN:
+                        sum += 100;
+                        break;
 
-				case WBISHOP:
-					sum += 330;
-					break;
+                    case WROOK:
+                        sum += 500;
+                        break;
 
-				case WQUEEN:
-					sum += 900;
-					break;
+                    case WBISHOP:
+                        sum += 330;
+                        break;
 
-				case WKING:
-					sum += 20000;
-					break;
+                    case WQUEEN:
+                        sum += 900;
+                        break;
 
-				case WKNIGHT:
-					sum += 320;
-					break;
+                    case WKING:
+                        sum += 20000;
+                        break;
 
-				}
+                    case WKNIGHT:
+                        sum += 320;
+                        break;
 
-			}
-		}
-		return sum;
-	}
+                }
 
-	
-	/** Arvioi mustan asemaa hänella olevien nappuloiden perusteella.
-	 * @param board Pelitilanne jota halutaan arvioida.
-	 * @return int Palauttaa summan nappuloista kerrottuna niiden arvolla.
-	 */
-	private int evaluationBlackPerspective(Piece[][] board) {
-		int sum = 0;
+            }
+        }
+        return sum;
+    }
 
-		for (int j = 0; j < max; j++) {
-			for (int i = 0; i < max; i++) {
+    /**
+     * Arvioi mustan asemaa hänella olevien nappuloiden perusteella.
+     *
+     * @param board Pelitilanne jota halutaan arvioida.
+     * @return int Palauttaa summan nappuloista kerrottuna niiden arvolla.
+     */
+    private int evaluationBlackPerspective(Piece[][] board) {
+        int sum = 0;
 
-				Piece currentSquare = board[j][i];
-				switch (currentSquare) {
+        for (int j = 0; j < max; j++) {
+            for (int i = 0; i < max; i++) {
 
-				case BPAWN:
-					sum -= 100;
-					break;
+                Piece currentSquare = board[j][i];
+                switch (currentSquare) {
 
-				case BROOK:
-					sum -= 500;
-					break;
+                    case BPAWN:
+                        sum -= 100;
+                        break;
 
-				case BBISHOP:
-					sum -= 330;
-					break;
+                    case BROOK:
+                        sum -= 500;
+                        break;
 
-				case BQUEEN:
-					sum -= 900;
-					break;
+                    case BBISHOP:
+                        sum -= 330;
+                        break;
 
-				case BKING:
-					sum -= 20000;
-					break;
+                    case BQUEEN:
+                        sum -= 900;
+                        break;
 
-				case BKNIGHT:
-					sum -= 320;
-					break;
+                    case BKING:
+                        sum -= 20000;
+                        break;
 
-				}
+                    case BKNIGHT:
+                        sum -= 320;
+                        break;
 
-			}
-		}
-		return sum;
-	}
+                }
 
-
+            }
+        }
+        return sum;
+    }
 
 }

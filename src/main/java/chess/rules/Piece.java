@@ -10,7 +10,7 @@ package chess.rules;
  * @author htomi
  */
 public enum Piece {
-    
+
     BPAWN,
     BROOK,
     BKNIGHT,
@@ -26,5 +26,5 @@ public enum Piece {
     EMPTY,
     BLACK,
     WHITE
-       
+
 }
