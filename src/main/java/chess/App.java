@@ -36,7 +36,7 @@ public class App {
         You need to place your bot implementation to the variable below.
         Make sure it implements the interface ChessBot, and don't change the variable name!
         */
-        TiraBot bot = new TiraBot(); // Your bot here!
+        TiraBot bot = new TiraBot(3); // Your bot here!
         
 
         if (isLichess) {
