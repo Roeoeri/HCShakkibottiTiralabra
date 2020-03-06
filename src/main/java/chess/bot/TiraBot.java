@@ -23,7 +23,9 @@ public class TiraBot implements ChessBot {
     private ChessHeuristic heuristic;
     private int maxDepth;
     private final int minEvalValue = -3000000;
-    private final int maxEvalValue =  3000000;
+	private final int maxEvalValue =  3000000;
+	private final int convertNumberCharToInt = 49;
+	private final int convertAlphabetCharToInt = 97;
    
 
     public TiraBot(int maxDepth) {
@@ -44,7 +46,12 @@ public class TiraBot implements ChessBot {
         heuristic = new ChessHeuristic();
     }
 
-    @Override
+    
+	/** 
+	 * @param gs Pelimoottorin ymmärtämä GameState-olio
+	 * @return String Siirto UCI Formaatissa
+	 */
+	@Override
     public String nextMove(GameState gs) {
     	if(gs.getMoveCount() > 0) {
     		updateBoard(gs.getLatestMove());
@@ -62,7 +69,14 @@ public class TiraBot implements ChessBot {
         return move;
     }
     
-    public String parseMove(Piece[][] startBoard, Piece[][] endBoard) {
+    
+	/** 
+	 * Parsii kahden pelitilanteen välisen erotuksen merkkijonomuotoiseksi UCI siirroksi.
+	 * @param startBoard Pelitilanne alussa.
+	 * @param endBoard Pelitilanne lopussa.
+	 * @return String Pelitilanteiden välinen erotus UCI-siirtona
+	 */
+	public String parseMove(Piece[][] startBoard, Piece[][] endBoard) {
     	String endPoint = "";
     	String startPoint = "";
     	for(int i = 0; i< 8; i++) {
@@ -70,8 +84,8 @@ public class TiraBot implements ChessBot {
     		   	Piece startPiece = startBoard[i][j];
     		   	Piece endPiece = endBoard[i][j];
     		   	
-    			String row = String.valueOf((char) (i + 49));
-    		    String column = String.valueOf((char) (j + 97));
+    			String row = String.valueOf((char) (i + convertNumberCharToInt));
+    		    String column = String.valueOf((char) (j + convertAlphabetCharToInt));
     			if(startPiece != endPiece) {
     				if(endPiece == Piece.EMPTY) {
     					startPoint = column + row;
@@ -86,7 +100,13 @@ public class TiraBot implements ChessBot {
     }
     
     
-    private boolean gameOver(Piece[][] board) {
+    
+	/** 
+	 * Tarkistaa, onko jossakin annetussa pelitilanteessa peli ohitse, eli toinen kuninkaista on kaatunut.
+	 * @param board Pelitilanne jota halutaan tarkastella.
+	 * @return boolean Palauttaa true, jos jompi kumpi kuninkaista on kaatunut, muutoin false.
+	 */
+	private boolean gameOver(Piece[][] board) {
     	boolean bKingAlive = false;
     	boolean wKingAlive = false;
     	int size = board.length;
@@ -109,7 +129,16 @@ public class TiraBot implements ChessBot {
 		return true;
     }
     
-    private int maxValue(Piece[][] board, int depth, int alpha, int beta){
+    
+	/** Minimax-algoritmin max-osuus.
+	 * @param board Pelitilanne, jota halutaan tarkastella.
+	 * @param depth Syvyys, johon tähän mennessä ollaan haettu.
+	 * @param alpha Alpha-arvo alphabeta pruningia varten.
+	 * @param beta Beta-arvo alphabeta pruningia varten.
+	 * @return int Numeerinen arvio sille, miten peli tulee jatkumaan kunkin valkoisen siirron jälkeen. Positiivinen jos peli
+	 * on valkoisen eduksi, muuten negatiivinen.
+	 */
+	private int maxValue(Piece[][] board, int depth, int alpha, int beta){
 		if(depth == maxDepth || gameOver(board)){
 			return heuristic.evaluateBoard(board);
 		}
@@ -129,7 +158,17 @@ public class TiraBot implements ChessBot {
     	return v;    	
     }
     
-    private int minValue(Piece[][] board, int depth, int alpha, int beta){
+    
+	/** 
+	 * Minimax algoritmin min-osuus.
+	 * @param board Pelitilanne, jota halutaan tarkastella.
+	 * @param depth Syvyys, johon tähän mennessä ollaan haettu.
+	 * @param alpha Alpha-arvo alphabeta pruningia varten.
+	 * @param beta Beta-arvo alphabeta pruningia varten.
+	 * @return int Numeerinen arvio sille, miten peli tulee jatkumaan kunkin mustan siirron jälkeen. Positiivinen jos peli
+	 * on valkoisen eduksi, muuten negatiivinen.
+	 */
+	private int minValue(Piece[][] board, int depth, int alpha, int beta){
 		if(depth == maxDepth || gameOver(board)){
 			return heuristic.evaluateBoard(board);
 		}
@@ -152,7 +191,12 @@ public class TiraBot implements ChessBot {
     }
     
     
-    public Piece[][] getBestWhiteMove(Piece[][] board){
+    
+	/** Metodi, joka palauttaa parametrina annetun pelitilanteen lapsista sen jolla on suurin arvo (= Paras siirto valkoiselle).
+	 * @param board Tarkasteltava pelitilanne.
+	 * @return Piece[][] Pelitilanne joka seuraa parasta valkoista siirtoa.
+	 */
+	public Piece[][] getBestWhiteMove(Piece[][] board){
     	ChessList<Piece[][]> children = checker.getLegalMoves(board, true);
     	
     	Piece[][] bestNode = null;
@@ -167,7 +211,12 @@ public class TiraBot implements ChessBot {
     	return bestNode;	
     }
     
-    public Piece[][] getBestBlackMove(Piece[][] board){
+    
+	/** Metodi, joka palauttaa parametrina annetun pelitilanteen lapsista sen jolla on pienin arvo (= Paras siirto mustalle).
+	 * @param board Tarkasteltava pelitilanne.
+	 * @return Piece[][] Piece[][] Pelitilanne joka seuraa parasta mustaa siirtoa.
+	 */
+	public Piece[][] getBestBlackMove(Piece[][] board){
     	ChessList<Piece[][]> children = checker.getLegalMoves(board, false);
     	
     	Piece[][] bestNode = null;
@@ -183,13 +232,17 @@ public class TiraBot implements ChessBot {
     }
     
     
-    public void updateBoard(String move) {
+    
+	/** Päivittää tirabotin sisäistä pelilautaa parametrina annetun UCI-merkkijonon mukaisesti.
+	 * @param move UCI-siirto.
+	 */
+	public void updateBoard(String move) {
 
-        int x1 = move.charAt(0) - 97;
-        int y1 = move.charAt(1) - 49;
+        int x1 = move.charAt(0) - convertAlphabetCharToInt;
+        int y1 = move.charAt(1) - convertNumberCharToInt;
 
-        int x2 = move.charAt(2) - 97;
-        int y2 = move.charAt(3) - 49;
+        int x2 = move.charAt(2) - convertAlphabetCharToInt;
+        int y2 = move.charAt(3) - convertNumberCharToInt;
         
         
         Piece PieceToBeMoved = currentboard[y1][x1];
