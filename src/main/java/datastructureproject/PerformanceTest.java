@@ -123,13 +123,9 @@ public class PerformanceTest {
     public static void printResultsAtDepth(int depth) {
         PerformanceTest test = new PerformanceTest(depth);
         System.out.println("Average times at search depth: " + depth);
-        System.out.println("Average time to calculate a move during 10 random board positions " + test.averageTimeOfNPlays(10)
-                + " seconds");
         System.out.println("Average time to calculate a move during 100 random board positions " + test.averageTimeOfNPlays(100)
                 + " seconds");
-        System.out.println("Average time to calculate a move during 1000 random board positions " + test.averageTimeOfNPlays(1000)
-                + " seconds");
-        System.out.println("----------------------");
+        System.out.println("----------------");
     }
 
 }
