@@ -45,7 +45,7 @@ public class PerformanceTest {
         }
     }
 
-    public double averageTimeOfNGames(int games){
+    public double averageTimeOfNPlays(int games){
 
         double totalTime = 0;
         for(int i = 0; i< games+1; i++) {
@@ -134,9 +134,9 @@ public class PerformanceTest {
 
     public static void main(String[] args) {
         PerformanceTest test = new PerformanceTest(3);
-        System.out.println("Average time to calculate a move during 10 random board positions" + test.averageTimeOfNGames(10));
-        System.out.println("Average time to calculate a move during 100 random board positions" + test.averageTimeOfNGames(100));
-        System.out.println("Average time to calculate a move during 1000 random board positions" + test.averageTimeOfNGames(1000));
+        System.out.println("Average time to calculate a move during 10 random board positions" + test.averageTimeOfNPlays(10));
+        System.out.println("Average time to calculate a move during 100 random board positions" + test.averageTimeOfNPlays(100));
+        System.out.println("Average time to calculate a move during 1000 random board positions" + test.averageTimeOfNPlays(1000));
         /*
         Set your bot and tests here.
         */

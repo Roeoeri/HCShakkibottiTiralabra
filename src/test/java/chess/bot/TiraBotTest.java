@@ -93,7 +93,7 @@ public class TiraBotTest {
 	@Test
 	public void botGeneratesPlayInAReasonableAmountOfTime() {
 
-		assertTrue(test.averageTimeOfNGames(100) < 1);
+		assertTrue(test.averageTimeOfNPlays(100) < 1);
 		
 	}		
 }
