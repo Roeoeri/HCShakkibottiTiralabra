@@ -69,8 +69,6 @@ public class MovementCheckerTest {
        Piece[][] resultBoard = result.get(0);
 
        assertTrue(resultBoard[3][2] == Piece.EMPTY && resultBoard[2][2] == Piece.BPAWN);
-       
-    	
     }
     
     
@@ -206,6 +204,34 @@ public class MovementCheckerTest {
 
         assertTrue(result[2][4] == Piece.EMPTY && result[3][3] == Piece.BPAWN);
 
+    }
+
+    @Test
+    public void pawnsCanMoveTwoStepsFromStartingSquare(){
+
+        Piece[][] testBoard = new Piece[][]{
+            {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
+            {Piece.EMPTY, Piece.EMPTY, Piece.WPAWN, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
+            {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
+            {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
+            {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
+            {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
+            {Piece.EMPTY, Piece.EMPTY, Piece.BPAWN, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},
+            {Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY, Piece.EMPTY},};
+        
+        ChessList<Piece[][]> resultBlack = checker.getLegalMoves(testBoard, false);
+        ChessList<Piece[][]> resultWhite = checker.getLegalMoves(testBoard, true);
+        boolean twoStepBlackMoveFound = false;
+        boolean twoStepWhiteMoveFound = false;
+        for(int i = 0; i< 2; i++){
+            if(resultBlack.get(i)[4][2] == Piece.BPAWN){
+                twoStepBlackMoveFound = true;
+            }
+            if(resultWhite.get(i)[3][2] == Piece.WPAWN){
+                twoStepWhiteMoveFound = true;
+            }
+        }
+        assertTrue(twoStepBlackMoveFound == true && twoStepWhiteMoveFound  == true);
     }
     
   
