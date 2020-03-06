@@ -18,6 +18,21 @@ Tirabottia on testattu pienellä määrllä yksikkötestejä, jossa on tarkastet
 
 ## Suorituskykytestaus
 
+Suorituskykyä testattiin luomalla 100 kpl satunnaisia pelitilanteita, ja ottamalla aikaa, kuinka kauan Shakkibotilla meni luoda siirto hakusyvyyksillä 1,2,3,4 ja 5. Jokaisella hakusyvyydellä siirrot luotiin valkoisen ja mustan pelaajan näkökulmasta ja otettiin ajoista keskiarvo. Tulokset on kuvattu oheisessa taulukossa.
+
+| Hakusyvyys        | Kuinka kauan siirron luomisessa meni keskimäärin| 
+| -------------     |:-----------------------------------------------:| 
+| 1                 |8.143*10^-5 sekuntia         | 
+| 2                 |9.216*10^-4 sekuntia         |  
+| 3                 |0.0248 sekuntia              |
+| 4                 |0.3082 sekuntia           |
+| 5                 |7.7887 sekuntia           |
+
+Kuten taulukosta voi päätellä, hakusyvyydellä 5 botti vie jo suhteellisen pitkän ajan päätöksen tekemiseen. Toisaalta shakin branching factor on 31-35 [Wikipedia: Branching factor](https://en.wikipedia.org/wiki/Branching_factor), jolloin hakusyvyydellä 5 joudutaan käymään pahimmassa tapauksessa 31^5 = 28629151 pelitilannetta läpi. Silti melkein kymmenen sekunnin mietintäaika on melko pitkä, joten esimerkiksi siirtojen luontia olisi pitänyt optimoida aikavaativuudesta O(n). 
+                                        
+### Toistettavuus
+Testit on mahdollista toistaa ajamalla projektin juuressa `gradle performanceTest`
+
 
 
 
