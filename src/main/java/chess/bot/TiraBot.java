@@ -21,12 +21,13 @@ public class TiraBot implements ChessBot {
     private Piece[][] currentboard;
     private MovementChecker checker;
     private ChessHeuristic heuristic;
-    private final int maxDepth = 4;
+    private int maxDepth;
     private final int minEvalValue = -3000000;
     private final int maxEvalValue =  3000000;
    
 
-    public TiraBot() {
+    public TiraBot(int maxDepth) {
+		this.maxDepth = maxDepth;
 
         currentboard = new Piece[][]{
             {Piece.WROOK, Piece.WKNIGHT, Piece.WBISHOP, Piece.WQUEEN, Piece.WKING, Piece.WBISHOP, Piece.WKNIGHT, Piece.WROOK},
