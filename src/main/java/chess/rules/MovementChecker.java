@@ -100,9 +100,27 @@ public class MovementChecker {
         }
     }
 
-    private void getLegalPawnMoves(Piece[][] board, int x, int y) {
-        Piece ownColor = board[y][x];
-        Piece oppositeColor = getOppositeColor(ownColor);
+    private void getTwoSquarePawnMove(Piece[][] board, int x, int y){
+        Piece pawn = board[y][x];
+     
+        if(pawn == Piece.BPAWN && y == 6){
+            if(board[y-1][x] == Piece.EMPTY && board[y-2][x] == Piece.EMPTY){
+                Piece[][] move = moveCharacter(board, x, y, x, y -2);
+                legalMoves.add(move);
+            }
+        }
+        if(pawn == Piece.WPAWN && y == 1){
+            if(board[y + 1][x] == Piece.EMPTY && board[y + 2][x] == Piece.EMPTY){
+                Piece[][] move = moveCharacter(board, x, y, x, y + 2);
+                legalMoves.add(move);
+            }
+        }
+
+    }
+
+    private void getReqularPawnMoves(Piece[][] board, int x, int y) {
+        Piece pawn = board[y][x];
+        Piece oppositeColor = getOppositeColor(pawn);
 
         int pawnStep = 1;
         if (board[y][x] == Piece.BPAWN) {
@@ -139,6 +157,11 @@ public class MovementChecker {
             }
         }
 
+    }
+
+    private void getLegalPawnMoves(Piece[][] board , int x, int y){
+        getTwoSquarePawnMove(board, x, y);
+        getReqularPawnMoves(board, x, y); 
     }
 
     private void getLegalRookMoves(Piece[][] board, int x, int y) {
