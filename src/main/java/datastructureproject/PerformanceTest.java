@@ -59,18 +59,12 @@ public class PerformanceTest {
 			bot.getBestBlackMove(testBoard);
             long endTime = System.nanoTime();
             double durationBlack = (double) (endTime - startTime)/1000000000;
-            if(durationBlack > 10){
-                printboard(testBoard);
-            }
-
+    
             startTime = System.nanoTime();
             bot.getBestWhiteMove(generateRandomTestBoard());
             endTime = System.nanoTime();
             double durationWhite = (double) (endTime - startTime)/1000000000;
-            if(durationWhite > 10){
-                printboard(testBoard);
-            }
-            
+        
             if(i == 0){
                 continue;
             }
