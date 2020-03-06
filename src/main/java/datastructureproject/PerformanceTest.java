@@ -7,9 +7,12 @@ import chess.engine.GameState;
 import chess.rules.MovementChecker;
 import chess.rules.Piece;
 
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import javax.sound.sampled.SourceDataLine;
 
 import com.google.common.base.Ticker;
 
@@ -49,7 +52,6 @@ public class PerformanceTest {
 
         double totalTime = 0;
         for(int i = 0; i< games+1; i++) {
-            System.out.println("Round " + i + "out of " + games);
 
             Piece[][] testBoard = generateRandomTestBoard();
             
@@ -57,7 +59,6 @@ public class PerformanceTest {
 			bot.getBestBlackMove(testBoard);
             long endTime = System.nanoTime();
             double durationBlack = (double) (endTime - startTime)/1000000000;
-            System.out.println("Black took " + durationBlack);
             if(durationBlack > 10){
                 printboard(testBoard);
             }
@@ -66,12 +67,9 @@ public class PerformanceTest {
             bot.getBestWhiteMove(generateRandomTestBoard());
             endTime = System.nanoTime();
             double durationWhite = (double) (endTime - startTime)/1000000000;
-            System.out.println("White took " + durationWhite);
             if(durationWhite > 10){
                 printboard(testBoard);
             }
-
-            System.out.println("--------");
             
             if(i == 0){
                 continue;
@@ -133,13 +131,24 @@ public class PerformanceTest {
 
 
     public static void main(String[] args) {
-        PerformanceTest test = new PerformanceTest(3);
-        System.out.println("Average time to calculate a move during 10 random board positions" + test.averageTimeOfNPlays(10));
-        System.out.println("Average time to calculate a move during 100 random board positions" + test.averageTimeOfNPlays(100));
-        System.out.println("Average time to calculate a move during 1000 random board positions" + test.averageTimeOfNPlays(1000));
-        /*
-        Set your bot and tests here.
-        */
+       
+        for(int i = 1; i< 6; i++){
+            printResultsAtDepth(i);
+        }
+       
     }
+
+    public static void printResultsAtDepth(int depth){
+        PerformanceTest test = new PerformanceTest(depth);
+        System.out.println("Average times at search depth: " + depth);
+        System.out.println("Average time to calculate a move during 10 random board positions " + test.averageTimeOfNPlays(10)+
+        " seconds");
+        System.out.println("Average time to calculate a move during 100 random board positions "  + test.averageTimeOfNPlays(100) + 
+        " seconds");
+        System.out.println("Average time to calculate a move during 1000 random board positions " + test.averageTimeOfNPlays(1000)+ 
+        " seconds");
+        System.out.println("----------------------");
+    }
+    
 
 }

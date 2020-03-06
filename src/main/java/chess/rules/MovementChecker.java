@@ -18,6 +18,12 @@ public class MovementChecker {
     private final int size = 8;
     private final int min = 0;
 
+    
+    /** Palauttaa listan laillisista siirroista joita on saatavilla annetusta pelitilanteesta.
+     * @param board Pelitilanne, jota halutaan tarkastella.
+     * @param isWhite true tarkoittaa, että tarkastellaan valkoisia siirtoja, false puolestaan mustia.
+     * @return ChessList<Piece[][]> Lista laillisista siirroista.
+     */
     public ChessList<Piece[][]> getLegalMoves(Piece[][] board, boolean isWhite) {
         legalMoves = new ChessList<Piece[][]>();
         if (isWhite) {
@@ -28,6 +34,10 @@ public class MovementChecker {
         return legalMoves;
     }
 
+    
+    /** Lisää luokan sisäiseen listaan laillisia valkoisen siirtoja annetusta pelitilanteesta.
+     * @param board Pelitilanne jota halutaan tarkastella.
+     */
     private void getLegalWhiteMoves(Piece[][] board) {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
@@ -65,6 +75,10 @@ public class MovementChecker {
 
     }
 
+    
+    /** Lisää luokan sisäiseen listaan laillisia mustan siirtoja annetusta pelitilanteesta.
+     * @param board Pelitilanne jota halutaan tarkastella.
+     */
     private void getLegalBlackMoves(Piece[][] board) {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
@@ -100,6 +114,12 @@ public class MovementChecker {
         }
     }
 
+    
+    /**  Tarkistaa onko annetuissa koordinaateissa sotilasta, joka voi liikkua kaksi askelta. Jos on niin lisätään se listaan.
+     * @param board Pelitilanne jota halutaan tarkastella.
+     * @param x Sotilaan sarake
+     * @param y Sotilaan rivi
+     */
     private void getTwoSquarePawnMove(Piece[][] board, int x, int y){
         Piece pawn = board[y][x];
      
@@ -118,6 +138,12 @@ public class MovementChecker {
 
     }
 
+    
+    /** Lisää listaan normaalitilanteissa sallittuja sotilaan liikkeitä.
+     * @param board Pelitilanne, jota halutaan tarkastella.
+     * @param x  Sotilaan sarake
+     * @param y  Sotilaan rivi
+     */
     private void getReqularPawnMoves(Piece[][] board, int x, int y) {
         Piece pawn = board[y][x];
         Piece oppositeColor = getOppositeColor(pawn);
@@ -159,11 +185,23 @@ public class MovementChecker {
 
     }
 
+    
+    /** Lisää listaan kaikki sotilaiden lailliset siirrot.
+     * @param board Pelitilanne, jota halutaan tarkastella
+     * @param x Sotilaan sarake.
+     * @param y Sotilaan rivi
+     */
     private void getLegalPawnMoves(Piece[][] board , int x, int y){
         getTwoSquarePawnMove(board, x, y);
         getReqularPawnMoves(board, x, y); 
     }
 
+    
+    /** Lisää listaan sallitut tornin liikkeet
+     * @param board Pelitilanne, jota halutaan tarkastella.
+     * @param x Tornin sarake
+     * @param y Tornin rivi
+     */
     private void getLegalRookMoves(Piece[][] board, int x, int y) {
 
         Piece ownColor = getColor(board[y][x]);
@@ -177,6 +215,12 @@ public class MovementChecker {
         traverseUntilEnd(board, x, y, x, y - 1, 0, -1, ownColor);
     }
 
+    
+    /**  Lisää listaan sallitut lähetin liikkeet
+     * @param board Pelitilanne, jota halutaan tarkastella
+     * @param x Lähetin Sarake
+     * @param y Lähetin Rivi
+     */
     private void getLegalBishopMoves(Piece[][] board, int x, int y) {
 
         Piece ownColor = getColor(board[y][x]);
@@ -190,12 +234,24 @@ public class MovementChecker {
         traverseUntilEnd(board, x, y, x + 1, y + 1, 1, 1, ownColor);
     }
 
+    
+    /** Lisää listaan sallitut kuningattaren liikkeet
+     * @param board Pelitilanne jota halutaan tarkastella.
+     * @param x Kuningattaren sarake.
+     * @param y Kuningattaren rivi.
+     */
     private void getLegalQueenMoves(Piece[][] board, int x, int y) {
 
         getLegalRookMoves(board, x, y);
         getLegalBishopMoves(board, x, y);
     }
 
+    
+    /** Lisää listaan sallitut kuninkaan liikkeet
+     * @param board Pelitilanne jota halutaan tarkastella.
+     * @param x Kuninkaan sarake
+     * @param y Kuninkaan rivi
+     */
     private void getLegalKingMoves(Piece[][] board, int x, int y) {
 
         Piece ownColor = getColor(board[y][x]);
@@ -214,6 +270,12 @@ public class MovementChecker {
         }
     }
     
+    
+    /**  Lisää listaan sallitut ratsun liikkeet
+     * @param board Pelitilanne, jota halutaan tarkastella
+     * @param x Ratsun sarake.
+     * @param y Ratsun rivi.
+     */
     private void getLegalKnightMoves(Piece[][] board, int x, int y) {
     	int[] possibleStepsInYCoordinate = new int[]{2,2,1,1,-1,-1,-2,-2};
     	int[] possibleStepsInXCoordinate = new int[]{-1,1,-2,2,-2,2,-1,1};
@@ -239,6 +301,17 @@ public class MovementChecker {
     	
     }
 
+    
+    /** Käy rekursiivisesti läpi ruutuja, jotka ovat vaaka- tai pystysuorassa tai vinossa aloitusruutun nähden
+     * @param board Pelitilanne jota halutaan tarkastella.
+     * @param startX Aloitussarake
+     * @param startY Aloitusrivi
+     * @param x uusi sarake
+     * @param y uusi rivi
+     * @param xSteps kuinka monta askelta otetaan seuraavalle sarakkeelle
+     * @param ySteps kuinka mont askelta otetaan seuraavalle riville
+     * @param ownColor Aloitusruudussa olleen nappulan väri.
+     */
     private void traverseUntilEnd(Piece[][] board, int startX, int startY, int x, int y, int xSteps, int ySteps, Piece ownColor) {
         if (x >= size || x < min || y >= size || y < min) {
             return;
@@ -263,6 +336,15 @@ public class MovementChecker {
     }
     
 
+    
+    /** Luo uuden laudan, jossa nappula on siirretty alkupisteestä loppupisteeseen.
+     * @param board Pelilauta
+     * @param x1 Alkusarake
+     * @param y1 Alkurivi
+     * @param x2 Loppusarake
+     * @param y2 Loppurivi
+     * @return Piece[][] Uusi lauta jossa nappula on siirretty.
+     */
     private Piece[][] moveCharacter(Piece[][] board, int x1, int y1, int x2, int y2) {
 
         Piece[][] boardToBeReturned = new Piece[8][8];
@@ -280,6 +362,11 @@ public class MovementChecker {
         return boardToBeReturned;
     }
 
+    
+    /** Palauttaa nappulan värin
+     * @param piece Nappula
+     * @return Piece Nappulan väri
+     */
     public Piece getColor(Piece piece) {
         if (piece.toString().charAt(0) == 'B') {
             return Piece.BLACK;
@@ -291,6 +378,11 @@ public class MovementChecker {
 
     }
 
+    
+    /** Palauttaa nappulan vastakkaisen värin
+     * @param piece Nappula
+     * @return Piece Vastakkainen väri.
+     */
     public Piece getOppositeColor(Piece piece) {
         if (getColor(piece) == Piece.WHITE) {
             return Piece.BLACK;

@@ -13,6 +13,10 @@ public class ChessList<E> implements Iterable<E>{
 		list = (E[])new Object[SIZE];
 	}
 	
+	
+	/** Lisää parametrina annetun elementin listaan.
+	 * @param e lisättävä elementti.
+	 */
 	public void add(E e) {
 		list[pointer] = e;
 		pointer ++;
@@ -21,10 +25,19 @@ public class ChessList<E> implements Iterable<E>{
 		}
 	}
 	
+	
+	/** Palauttaa listassa indeksissä olevan olion.
+	 * @param index haettava indeksi.
+	 * @return E Indeksissä oleva olio.
+	 */
 	public E get(int index) {
 		return list[index];
 	}
 	
+	
+	/** Palauttaa listan koon.
+	 * @return int Listan koko.
+	 */
 	public int size() {
 		return this.pointer;
 	}
@@ -38,6 +51,10 @@ public class ChessList<E> implements Iterable<E>{
 		SIZE = NEWSIZE;
 	}
 	
+	
+	/**  
+	 * @return Iterator<E> Iteraattori.
+	 */
 	public Iterator<E> iterator(){
 		return new ChessIterator();
 	}

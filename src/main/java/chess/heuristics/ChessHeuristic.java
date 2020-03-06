@@ -7,6 +7,11 @@ public class ChessHeuristic {
 	private final int min = 0;
 	private final int max = 8;
 
+	
+	/** Palauttaa numeroarvion siitä, kummalla pelaajalla on parametrina annetulla laudalla parempi asema. Positiivinen arvo tarkoittaa valkoista, negatiivinen mustaa.
+	 * @param board Lauta jota halutaan arvioida.
+	 * @return int Numeroarvio pelaajien asemasta.
+	 */
 	public int evaluateBoard(Piece[][] board) {
 
 		int whiteEvaluation = evaluationWhitePerspective(board);
@@ -18,6 +23,11 @@ public class ChessHeuristic {
 
 	}
 
+	
+	/** Arvioi valkoisen asemaa hänellä olevien nappuloiden perusteella.
+	 * @param board Pelitilanne jota halutaan arvioida.
+	 * @return int Palauttaa summan nappuloista kerrottuna niiden arvolla.
+	 */
 	private int evaluationWhitePerspective(Piece[][] board) {
 		int sum = 0;
 
@@ -58,6 +68,11 @@ public class ChessHeuristic {
 		return sum;
 	}
 
+	
+	/** Arvioi mustan asemaa hänella olevien nappuloiden perusteella.
+	 * @param board Pelitilanne jota halutaan arvioida.
+	 * @return int Palauttaa summan nappuloista kerrottuna niiden arvolla.
+	 */
 	private int evaluationBlackPerspective(Piece[][] board) {
 		int sum = 0;
 
